@@ -1,0 +1,12 @@
+{
+	"name" : "CharServer",
+	"version": "1.0.0",
+	"description" : "this is a new project",
+	"main" : "StartChar.js",
+	"dependencies" : {
+		"socket.io" : "*",
+		"mongodb" : "*",
+		"shortid" : "*",
+		"express" : "*"
+	}
+}
