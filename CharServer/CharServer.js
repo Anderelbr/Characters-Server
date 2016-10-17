@@ -19,8 +19,7 @@ function CharServer (){
 	});
 };
 
-function StartEvents (Char, socket){
-	
+function StartEvents (Char, socket){	
 	socket.on ("CharEnterReq", function(){
 		console.log ('New connection');
 		socket.emit("CharEnterRes");
@@ -35,5 +34,7 @@ function StartEvents (Char, socket){
 	console.log("Client disconnected");
 	});	
 };
+
+http.listen(port);
 
 module.exports.InitializeServer = CharServer;
