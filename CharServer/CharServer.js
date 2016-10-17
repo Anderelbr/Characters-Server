@@ -7,13 +7,12 @@ var io = require ('socket.io')(http);
 var port = process.env.PORT || 7200;
 
 app.get('/', function(req, res){
-	res.send("-- Server is running on " + port + " --");
+	res.send("Server is running on " + port);
 	CharServer();
 });
 
 function CharServer (){
 	io.on ('connection', function (socket){
-
 		var Char = new Characters.Character(socket);
 		StartEvents(Char, socket);
 	});
@@ -36,5 +35,3 @@ function StartEvents (Char, socket){
 };
 
 http.listen(port);
-
-module.exports.InitializeServer = CharServer;
