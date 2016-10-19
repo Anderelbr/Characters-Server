@@ -1,28 +1,12 @@
 {
-  "name": "login",
-  "version": "1.0.0",
-  "description": "This are a test server",
-  "main": "StartLogin.js",
-  "dependencies": {
-    "socket.io": "*",
-    "shortid": "*",
-    "mongodb": "*",
-    "express": "*"
-  },
-  "scripts": {
-    "start": "node StartLogin.js"
-  },
-  "engines": {
-      "node": "4.4.7"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Anderelbr/LoginServer.git"
-  },
-  "author": "Ander Berriel",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Anderelbr/LoginServer/issues"
-  },
-  "homepage": "https://github.com/Anderelbr/LoginServer#readme"
+	"name" : "CharServer",
+	"version": "1.0.0",
+	"description" : "this is a new project",
+	"main" : "StartChar.js",
+	"dependencies" : {
+		"socket.io" : "*",
+		"mongodb" : "*",
+		"shortid" : "*",
+		"express" : "*"
+	}
 }
