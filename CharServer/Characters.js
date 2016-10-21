@@ -3,14 +3,20 @@ var config = require("./config.js");
 
 var shortid = require("shortid");
 
+function ConnectDB (callback){
+	MongoDB.connect(config.dburl, function(err, db){
+		if(err)
+			throw err;
+		callback(db);
+	});
+};
+
 function Character (socket){
 
 	var MaxChars = 8;
 
 	this.Load = function (data){
-		MongoDB.connect(config.dburl, function (err, db){
-			if (err)
-				throw err;
+		ConnectDB(function (db){
 
 			db.collection("characters").find({id: data.id}).toArray(function(err, result){
 
@@ -33,9 +39,9 @@ function Character (socket){
 	}
 
 	this.Create = function (data){
-		var NewChar = {name: data.name, race: data.race, class: data.class, sex: data.sex, money: data.money, level: data.level, id: data.id, charid:shortid.generate()};
+		var NewChar = {name: data.name, race: data.race, class: data.class, sex: data.sex, money: data.money, level: data.level, pos: data.pos, id: data.id, charid: shortid.generate()};
 
-		MongoDB.connect(config.dburl, function (err, db){
+		ConnectDB(function (db){
 			db.collection("characters").find({name:NewChar.name}).toArray(function(err, result){
 
 				if(err)
@@ -65,7 +71,7 @@ function Character (socket){
 
 		var User = {id:data.id, charid:data.charid};
 
-		MongoDB.connect(config.dburl, function (err, db){
+		ConnectDB(function (db){
 			db.collection("characters").deleteOne({charid:User.charid}, function(err, result){
 				if(err)
 					throw err;		
