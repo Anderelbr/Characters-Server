@@ -2,26 +2,33 @@ var Characters = require('./Characters.js');
 
 var app = require('express')();
 var http = require('http').Server(app);
-var io = require ('socket.io')(http);
+var ioo = require ('socket.io');
 
 var port = process.env.PORT || 7200;
 
 app.get('/', function(req, res){
-	res.send("Server is running on " + port);
-	CharServer();
+	res.send("<h1>Server is running on " + port + "</h1>");
+	InitializeServer();
 });
 
-function CharServer (){
+function InitializeServer (){
+
+	var io = ioo.listen(http, false);
+
 	io.on ('connection', function (socket){
+
 		var Char = new Characters.Character(socket);
 		StartEvents(Char, socket);
 	});
+
+	console.log('Server is running on ' + port);
 };
 
-function StartEvents (Char, socket){	
-	socket.on ("CharEnterReq", function(){
+function StartEvents (Char, socket){
+	
+	socket.on ("EnterCharReq", function(){
 		console.log ('New connection');
-		socket.emit("CharEnterRes");
+		socket.emit("EnterCharRes");
 	});
 
 	socket.on ("LoadReq", Char.Load);

@@ -63,11 +63,10 @@ function Character (socket){
 
 	this.Delete = function (data){
 
-		var UserID = {id:data.id};
-		var CharID = {charid:data.charid};
+		var User = {id:data.id, charid:data.charid};
 
 		MongoDB.connect(config.dburl, function (err, db){
-			db.collection("characters").deleteOne(CharID, function(err, result){
+			db.collection("characters").deleteOne({charid:User.charid}, function(err, result){
 				if(err)
 					throw err;		
 				
