@@ -25,7 +25,7 @@ function Character (socket){
 					console.log("Success, this account have " + result.length + " characters");
 					
 					for (var i = 0; i < result.length; i++){
-						socket.emit ("LoadRes", {name:result[i].name, race: result[i].race, class: result[i].class, sex: result[i].sex, money: result[i].money, level: result[i].level, id: result[i].id, charid: result[i].charid, opcode: "0"});
+						socket.emit ("LoadRes", {character:result[i], opcode: "0"});
 					};
 				}else{
 
