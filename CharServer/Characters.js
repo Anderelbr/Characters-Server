@@ -18,15 +18,19 @@ function Character (socket){
 	this.Load = function (data){
 		ConnectDB(function (db){
 
-			db.collection("characters").find({id: data.id}).toArray(function(err, result){
+			db.collection("characters").find({id: data.accid}).toArray(function(err, result){
 
 				if(result.length > 0){
-
+					var allcharacters = {characters: []};
 					console.log("Success, this account have " + result.length + " characters");
 					
 					for (var i = 0; i < result.length; i++){
-						socket.emit ("LoadRes", {character:result[i], opcode: "0"});
+						allcharacters.characters.push(result[i]);
 					};
+
+					if (allcharacters.characters.length > 0){
+						socket.emit ("LoadRes", {character:allcharacters.characters, numchars: allcharacters.characters.length, opcode: "0"});
+					}
 				}else{
 
 					console.log("Not have characters");
@@ -39,7 +43,7 @@ function Character (socket){
 	}
 
 	this.Create = function (data){
-		var NewChar = {name: data.name, race: data.race, class: data.class, sex: data.sex, money: data.money, level: data.level, pos: data.pos, id: data.id, charid: shortid.generate()};
+		var NewChar = {name: data.name, money: 100, level: 1, location: "Gori Village", pos: "4.86,5,120.35", objid: data.objid, moveSpeed: 6, rotSpeed: 100, accid: data.accid, charid: shortid.generate()};
 
 		ConnectDB(function (db){
 			db.collection("characters").find({name:NewChar.name}).toArray(function(err, result){
@@ -69,7 +73,7 @@ function Character (socket){
 
 	this.Delete = function (data){
 
-		var User = {id:data.id, charid:data.charid};
+		var User = {accid:data.accid, charid:data.charid};
 
 		ConnectDB(function (db){
 			db.collection("characters").deleteOne({charid:User.charid}, function(err, result){
